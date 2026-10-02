@@ -1,0 +1,14 @@
+__pycache__/
+.idea/
+
+checkpoints/
+*.pt
+*.pth
+
+data/raw/
+data/processed/
+
+results/generated_sample.txt
+
+.DS_Store
+Thumbs.db
