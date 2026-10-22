@@ -87,7 +87,6 @@ def main():
                        for name, path in paths.items()},
               "question_overlap": sorted(train_questions & val_questions),
               "duplicate_training_questions": len(data["train"]) - len(train_questions),
-              "claimed_200_example_evaluation": "not found in the checked repository or local source",
               "models": {}}
     validation = FineTuningDataset(paths["validation"], ROOT / "tokenizer.json", 256)
     for name, filename in [("base", "base_model_epoch_1.pt"), ("finetuned", "finetuned_model.pt")]:

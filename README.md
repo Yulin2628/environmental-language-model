@@ -31,7 +31,7 @@ Use `--backend manual` to inspect the reference attention path, or `--no-cache` 
 
 ## What the old quality numbers support
 
-The available data has 13 training QA pairs and 3 validation pairs. Re-evaluation on those same three pairs reduces token-weighted answer loss from 6.4683 to 5.4034; teacher-forced token match rises from 7.25% to 20.29%, including EOS. This is validation-set reproduction, not an independent QA accuracy estimate. The earlier claim of 200 held-out examples, a 23% loss reduction and 7% to 28% token matching could not be verified.
+The available data has 13 training QA pairs and 3 validation pairs. Re-evaluation on those same three pairs reduces token-weighted answer loss from 6.4683 to 5.4034; teacher-forced token match rises from 7.25% to 20.29%, including EOS. This is validation-set reproduction, not an independent QA accuracy estimate.
 
 [The audit](results/AUDIT.md) includes hashes, denominators and actual generated answers. The checkpoint remains a limited language model: improving execution speed does not improve its knowledge.
 

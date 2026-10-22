@@ -12,7 +12,7 @@
 - Added request-local KV caching, PyTorch SDPA and last-token vocabulary projection, reducing median FP32 latency from 643 to 184 ms (3.51x) for a 384-token prefix and 64 generated tokens on an RTX 3050 Laptop GPU.
 - Validated cached and uncached execution with causal-mask, gradient, request-isolation and context-rollover tests; built interleaved latency, throughput and GPU-memory benchmarks with nine repeats per configuration.
 
-The speed figure describes one specified workload. Use the supporting table when discussing other batch sizes or shorter prompts. Do not substitute the unverified 200-example claim, call token matching QA accuracy, claim to have implemented FlashAttention kernels, or claim that faster inference improved factual knowledge.
+The speed figure describes one specified workload. Use the supporting table when discussing other batch sizes or shorter prompts. Teacher-forced token matching does not measure QA accuracy. SDPA integrates PyTorch kernels; faster execution does not improve factual knowledge.
 
 ## Further development
 

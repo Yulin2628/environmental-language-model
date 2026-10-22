@@ -19,7 +19,6 @@
   },
   "question_overlap": [],
   "duplicate_training_questions": 1,
-  "claimed_200_example_evaluation": "not found in the checked repository or local source",
   "models": {
     "base": {
       "checkpoint_sha256": "5825f8de1d84bdddef64730c8f2de05d1da692d74ef8e85b1eab4cfa75ef3c2d",

@@ -1,6 +1,6 @@
 # Checkpoint and metric audit
 
-The screenshot claim of 200 held-out examples, a 23% answer-loss reduction and a 7% to 28% target-token match improvement could not be traced to an evaluation file. The published repository and local source contain 13 training pairs and 3 validation pairs, with one duplicated training question. These are the only QA validation examples used below. They were also evaluated during the original fine-tuning process, so this is a validation-set reproduction, not an independent test benchmark.
+The available checkpoint evaluation data contains 13 training pairs and 3 validation pairs, with one duplicated training question. These are the only QA validation examples used below. They were also evaluated during the original fine-tuning process, so this is a validation-set reproduction, not an independent test benchmark.
 
 | Metric on the same 3 validation pairs | Base | Fine-tuned |
 | --- | ---: | ---: |
@@ -59,4 +59,4 @@ These examples show that the fine-tuned checkpoint still gives incomplete or inc
 python audit_model.py --checkpoint-dir checkpoints --corpus-dir data/processed
 ```
 
-The raw PDFs, report text and checkpoints remain local. Source files and historical loss history are preserved. No 200-question dataset or score is inferred from the screenshot.
+The raw PDFs, report text and checkpoints remain local. Source files and historical loss history are preserved. No independent question-answer test set is established by these files.

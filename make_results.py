@@ -104,7 +104,7 @@ def main():
     base = audit["models"]["base"]["validation"]
     tuned = audit["models"]["finetuned"]["validation"]
     audit_lines = ["# Checkpoint and metric audit", "",
-          "The screenshot claim of 200 held-out examples, a 23% answer-loss reduction and a 7% to 28% target-token match improvement could not be traced to an evaluation file. The published repository and local source contain 13 training pairs and 3 validation pairs, with one duplicated training question. These are the only QA validation examples used below. They were also evaluated during the original fine-tuning process, so this is a validation-set reproduction, not an independent test benchmark.", "",
+          "The available checkpoint evaluation data contains 13 training pairs and 3 validation pairs, with one duplicated training question. These are the only QA validation examples used below. They were also evaluated during the original fine-tuning process, so this is a validation-set reproduction, not an independent test benchmark.", "",
           "| Metric on the same 3 validation pairs | Base | Fine-tuned |", "| --- | ---: | ---: |",
           f'| Token-weighted answer NLL, including EOS | {base["token_weighted_nll"]:.6f} | {tuned["token_weighted_nll"]:.6f} |',
           f'| Mean of example losses, as in the original trainer | {base["example_mean_nll"]:.6f} | {tuned["example_mean_nll"]:.6f} |',
@@ -121,7 +121,7 @@ def main():
           "Greedy decoding uses the training-style BOS and prompt, at most 64 new tokens and EOS stopping. The legacy chat omitted BOS and used sampling, so these are deterministic diagnostic outputs rather than an exact replay of a sampled chat."]
     for before, after in zip(base["cases"], tuned["cases"]):
         audit_lines += ["", f'### {before["question"]}', "", f'Reference: {before["answer"]}', "", f'Base: {before["greedy_answer"]}', "", f'Fine-tuned: {after["greedy_answer"]}']
-    audit_lines += ["", "These examples show that the fine-tuned checkpoint still gives incomplete or incorrect answers. The inference upgrade changes execution and measurement, not the model's knowledge.", "", "## Reproduce", "", "```bash", "python audit_model.py --checkpoint-dir checkpoints --corpus-dir data/processed", "```", "", "The raw PDFs, report text and checkpoints remain local. Source files and historical loss history are preserved. No 200-question dataset or score is inferred from the screenshot."]
+    audit_lines += ["", "These examples show that the fine-tuned checkpoint still gives incomplete or incorrect answers. The inference upgrade changes execution and measurement, not the model's knowledge.", "", "## Reproduce", "", "```bash", "python audit_model.py --checkpoint-dir checkpoints --corpus-dir data/processed", "```", "", "The raw PDFs, report text and checkpoints remain local. Source files and historical loss history are preserved. No independent question-answer test set is established by these files."]
     (RESULTS / "AUDIT.md").write_text("\n".join(audit_lines) + "\n", encoding="utf-8")
     long = next(row for row in rows if row["precision"] == "fp32" and row["batch"] == 1 and row["prefix_tokens"] == 384 and row["mode"] == "sdpa_cache")
     baseline = next(row for row in rows if row["precision"] == "fp32" and row["batch"] == 1 and row["prefix_tokens"] == 384 and row["mode"] == "original")
@@ -133,7 +133,7 @@ def main():
           "- Implemented a 25.3M-parameter decoder-only Transformer in PyTorch with six layers, eight attention heads, tied embeddings and a 512-token context window.",
           f'- Added request-local KV caching, PyTorch SDPA and last-token vocabulary projection, reducing median FP32 latency from {baseline["request_ms"]:.0f} to {long["request_ms"]:.0f} ms ({long["speedup_vs_original"]:.2f}x) for a 384-token prefix and 64 generated tokens on an RTX 3050 Laptop GPU.',
           "- Validated cached and uncached execution with causal-mask, gradient, request-isolation and context-rollover tests; built interleaved latency, throughput and GPU-memory benchmarks with nine repeats per configuration.", "",
-          "The speed figure describes one specified workload. Use the supporting table when discussing other batch sizes or shorter prompts. Do not substitute the unverified 200-example claim, call token matching QA accuracy, claim to have implemented FlashAttention kernels, or claim that faster inference improved factual knowledge.", "",
+          "The speed figure describes one specified workload. Use the supporting table when discussing other batch sizes or shorter prompts. Teacher-forced token matching does not measure QA accuracy. SDPA integrates PyTorch kernels; faster execution does not improve factual knowledge.", "",
           "## Further development", "",
           "The next systems step would be preallocated KV buffers and a small continuous-batching scheduler, measured against the current dynamic cache. Long-context architectures such as RoPE would require a new training study; extending the learned positional table alone is not evidence that the model can use longer contexts. Better answers would require substantially better data and independent evaluation. These remain future work rather than completed features."]
     (ROOT / "PORTFOLIO.md").write_text("\n".join(cv) + "\n", encoding="utf-8")
