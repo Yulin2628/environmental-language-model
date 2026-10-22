@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader, Subset
 
 from config import ModelConfig
 from dataset import LanguageModelDataset
+from data_split import purged_window_split
 from model import EnvironmentalLanguageModel
 
 
@@ -128,14 +129,8 @@ def main():
         number_of_examples * TRAIN_FRACTION
     )
 
-    training_indices = range(
-        0,
-        number_of_training_examples,
-    )
-
-    validation_indices = range(
-        number_of_training_examples,
-        number_of_examples,
+    training_indices, validation_indices = purged_window_split(
+        number_of_examples, config.context_length, complete_dataset.stride, TRAIN_FRACTION
     )
 
     training_dataset = Subset(
@@ -192,6 +187,12 @@ def main():
     training_history = {
         "training_loss": [],
         "validation_loss": [],
+        "split": {
+            "method": "purged contiguous token windows",
+            "train_windows": len(training_indices),
+            "validation_windows": len(validation_indices),
+            "purged_windows": validation_indices[0] - number_of_training_examples,
+        },
     }
 
     print("Device:", device)

@@ -1,0 +1,28 @@
+[
+  {
+    "precision": "float32",
+    "attention_dispatch": [
+      {
+        "operator": "aten::scaled_dot_product_attention",
+        "calls": 48
+      },
+      {
+        "operator": "aten::_scaled_dot_product_efficient_attention",
+        "calls": 48
+      }
+    ]
+  },
+  {
+    "precision": "float16",
+    "attention_dispatch": [
+      {
+        "operator": "aten::scaled_dot_product_attention",
+        "calls": 48
+      },
+      {
+        "operator": "aten::_scaled_dot_product_efficient_attention",
+        "calls": 48
+      }
+    ]
+  }
+]
