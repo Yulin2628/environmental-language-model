@@ -82,7 +82,9 @@ def main():
               "device": torch.cuda.get_device_name() if device == "cuda" else "cpu",
               "precision": "float32, TF32 disabled", "tokenizer_sha256": sha(ROOT / "tokenizer.json"),
               "tokenizer_vocabulary": tokenizer.get_vocab_size(),
-              "data": {name: {"examples": len(data[name]), "sha256": sha(path)} for name, path in paths.items()},
+              "data": {name: {"examples": len(data[name]), "sha256": sha(path),
+                       "normalized_lf_sha256": hashlib.sha256(path.read_text(encoding="utf-8").encode("utf-8")).hexdigest()}
+                       for name, path in paths.items()},
               "question_overlap": sorted(train_questions & val_questions),
               "duplicate_training_questions": len(data["train"]) - len(train_questions),
               "claimed_200_example_evaluation": "not found in the checked repository or local source",

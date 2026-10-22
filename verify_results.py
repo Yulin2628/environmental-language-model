@@ -17,7 +17,8 @@ def main():
     audit = read("results/audit.json")
     for split in ("train", "validation"):
         path = ROOT / f"data/finetune/{split}.jsonl"
-        assert hashlib.sha256(path.read_bytes()).hexdigest() == audit["data"][split]["sha256"]
+        normalized = path.read_text(encoding="utf-8").encode("utf-8")
+        assert hashlib.sha256(normalized).hexdigest() == audit["data"][split]["normalized_lf_sha256"]
     assert audit["models"]["base"]["unique_parameters"] == 25_309_184
     for item in audit["models"].values():
         metrics = item["validation"]

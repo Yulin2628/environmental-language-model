@@ -8,11 +8,13 @@
   "data": {
     "train": {
       "examples": 13,
-      "sha256": "023d8a48ab50148aa45e2892a8d4d77fde6339acfc7a204e4cdc545da4fcf543"
+      "sha256": "023d8a48ab50148aa45e2892a8d4d77fde6339acfc7a204e4cdc545da4fcf543",
+      "normalized_lf_sha256": "d237d578b703d5e9cbb3eac9528b98003f1c5d198b8ec47fddb30699e3b7e75e"
     },
     "validation": {
       "examples": 3,
-      "sha256": "b52b45c8ce16a9c7181ae00b8ca9c4560d9b0db73eb0f39dcc8c248c3ca66322"
+      "sha256": "b52b45c8ce16a9c7181ae00b8ca9c4560d9b0db73eb0f39dcc8c248c3ca66322",
+      "normalized_lf_sha256": "94c4767033a9a26295a6bc018d9653cc1f4b796dc577d5f967ad322181eceb2e"
     }
   },
   "question_overlap": [],
